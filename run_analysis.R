@@ -18,7 +18,7 @@ combine.data.set <- function(folder) {
   
   # Import lookups
   activ.descs <- read.table(paste(RAW.DATA.LOC, "activity_labels.txt", sep="/"), sep=" ", header=F)
-  names(activ.descs) <- c("Act.ID", "Act.Descr")
+  names(activ.descs) <- c("Activity.ID", "Activity.Description")
   feature.descs <- read.table(paste(RAW.DATA.LOC, "features.txt", sep="/"), sep=" ", header=F)
   names(feature.descs) <- c("Feature.ID", "Feature.Descr")
   
@@ -28,19 +28,19 @@ combine.data.set <- function(folder) {
   
   # Process activity data
   y.data <- read.table(paste(full_folder, "/y_", folder, ".txt", sep=""), header=F)
-  names(y.data) <- "Act.ID"
+  names(y.data) <- "Activity.ID"
   
   # Process subject data
   subj.data <- read.table(paste(full_folder, "/subject_", folder, ".txt", sep=""), sep=" ", header=F)
   
   # Combine sets
   res <- x.data
-  res$Act.ID <- y.data$Act.ID
+  res$Activity.ID <- y.data$Activity.ID
   res$Subject.ID <- subj.data[, 1]
   
   # Merge in Activity Descriptions, but only after lining up data
   # since merge messes up the order
-  res <- merge(res, activ.descs, by="Act.ID", all.x=T, sort=F)
+  res <- merge(res, activ.descs, by="Activity.ID", all.x=T, sort=F)
   
   # Return resulting dataframe
   res
@@ -61,15 +61,15 @@ combine.sets <- function(df1, df2) {
 
 create.summary <- function(df) {
   library(reshape2)
-  melted <- melt(df, id.vars=c("Subject.ID", "Act.Descr"))
-  res <- dcast(melted, Subject.ID + Act.Descr ~ ..., mean)
+  melted <- melt(df, id.vars=c("Subject.ID", "Activity.Description"))
+  res <- dcast(melted, Subject.ID + Activity.Description ~ ..., mean)
   res
 }
 
 prune <- function(df) {  
   cols <- names(df)
   col.conds <- (grepl("-mean()", cols, fixed=T) | grepl("-std()", cols, fixed=T) | 
-                  grepl("Act.Descr", cols, fixed=T) | grepl("Subject.ID", cols, fixed=T))
+                  grepl("Activity.Description", cols, fixed=T) | grepl("Subject.ID", cols, fixed=T))
   df[, col.conds]
 }
 
