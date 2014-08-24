@@ -8,15 +8,18 @@
 # 
 # -------------------------------------------------
 
-raw.data.folder = "./raw_data"
+# Location of the raw data
+RAW.DATA.LOC = "./raw_data"
 
+
+# Supporting Functions
 combine.data.set <- function(folder) {
-  full_folder <- paste(raw.data.folder, folder, sep="/")
+  full_folder <- paste(RAW.DATA.LOC, folder, sep="/")
   
   # Import lookups
-  activ.descs <- read.table(paste(raw.data.folder, "activity_labels.txt", sep="/"), sep=" ", header=F)
+  activ.descs <- read.table(paste(RAW.DATA.LOC, "activity_labels.txt", sep="/"), sep=" ", header=F)
   names(activ.descs) <- c("Act.ID", "Act.Descr")
-  feature.descs <- read.table(paste(raw.data.folder, "features.txt", sep="/"), sep=" ", header=F)
+  feature.descs <- read.table(paste(RAW.DATA.LOC, "features.txt", sep="/"), sep=" ", header=F)
   names(feature.descs) <- c("Feature.ID", "Feature.Descr")
   
   # Import data
@@ -41,11 +44,10 @@ combine.data.set <- function(folder) {
 }
 
 output.clean.data <- function(df, tgt) {
-  #TODO: Fill in / Fix
-  # write.table("blah", row.name=F)
   print(names(df))
-  print(summary(df))
+  # print(summary(df))
   print(dim(df))
+  write.table(df, tgt, row.names=F)
 }
 
 combine.sets <- function(df1, df2) {
@@ -54,26 +56,28 @@ combine.sets <- function(df1, df2) {
 }
 
 create.summary <- function(df) {
-  #TODO: Fill in / fix
-  df
+  library(reshape2)
+  melted <- melt(df, id.vars=c("Subject.ID", "Act.Descr"))
+  res <- dcast(melted, Subject.ID + Act.Descr ~ ..., mean)
+  res
 }
 
-prune <- function(df) {
-  #TODO: Fill in / fix
+prune <- function(df) {  
   cols <- names(df)
-  col.conds <- (grepl(cols, "-mean()") | grepl(cols, "-std()") | 
-                  grepl(cols, "Act.Descr") | grepl(cols, "Subject.ID"))
-  df
+  col.conds <- (grepl("-mean()", cols, fixed=T) | grepl("-std()", cols, fixed=T) | 
+                  grepl("Act.Descr", cols, fixed=T) | grepl("Subject.ID", cols, fixed=T))
+  df[, col.conds]
 }
 
-
+# Main control
 main <- function() {
   train.set <- combine.data.set("train")
   test.set <- combine.data.set("test")
   master.set <- combine.sets(train.set, test.set)
   pruned.set <- prune(master.set)
-  summary.set <- create.summary(master.set)
-  output.clean.data(summary.set, "")
+  summary.set <- create.summary(pruned.set)
+  output.clean.data(summary.set, "summarized.txt")
 }
 
+# Run the script
 main()
