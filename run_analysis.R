@@ -45,6 +45,7 @@ output.clean.data <- function(df, tgt) {
   # write.table("blah", row.name=F)
   print(names(df))
   print(summary(df))
+  print(dim(df))
 }
 
 combine.sets <- function(df1, df2) {
@@ -59,6 +60,9 @@ create.summary <- function(df) {
 
 prune <- function(df) {
   #TODO: Fill in / fix
+  cols <- names(df)
+  col.conds <- (grepl(cols, "-mean()") | grepl(cols, "-std()") | 
+                  grepl(cols, "Act.Descr") | grepl(cols, "Subject.ID"))
   df
 }
 
