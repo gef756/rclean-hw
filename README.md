@@ -3,12 +3,13 @@ Summary Data for Smartphone Dataset
 
 Introduction
 ----------------------------------------
-This repository provides the code and original source data to create a tidy, summarized version
+* This repository provides the code and original source data to create a tidy, summarized version
 of the Smartphone Data Set, whose original source is
 [here]("http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones").
-The data were collected from accelerometers and gyroscopes in Samsung Galaxy S II phones
+* The data were collected from accelerometers and gyroscopes in Samsung Galaxy S II phones
 for subjects who were either walking, walking upstairs, walking downstairs, sitting, standing,
-or laying. For the mean and standard deviations calculated for each of the signals in the
+or laying.
+* For the mean and standard deviations calculated for each of the signals in the
 original dataset, gives the mean for each subject-activity pair, (e.g. the mean of the means and
 the mean of the standard deviations for subject 1 walking, the mean of the means and the mean of
 the standard deviations for subject 1 walking upstairs, etc.)
@@ -22,8 +23,8 @@ Requirements
 
 Procedure
 ----------------------------------------
-Input: ./raw_data/ - folder containing the original data
-Output: summarized.txt - a tidy dataset containing the average data for select variables,
+* Input: ./raw_data/ - folder containing the original data
+* Output: summarized.txt - a tidy dataset containing the average data for select variables,
   with their corresponding subject and activity identifiers.
 
 The script performs the following steps:
