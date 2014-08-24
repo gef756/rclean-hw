@@ -13,8 +13,9 @@ Descriptions and Units
 * Subject.ID - numeric identifier identifying each subject.
 * Activity.Description - a factor describing the activity being performed by the subject.
 * The remainder of the columns are averages of the calculations of the corresponding names
-  in the original dataset. They are dimensionless (i.e. contain no units), since the
-  features were all normalized to be between -1 and 1.
+  in the original dataset (details in original codebook section, below). They are
+  dimensionless (i.e. contain no units), since the features were all normalized to be
+  between -1 and 1.
 
 Full Column Listing (for Summarized Dataset)
 ----------------------------------------------
