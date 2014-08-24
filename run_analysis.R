@@ -29,24 +29,28 @@ combine.data.set <- function(folder) {
   # Process activity data
   y.data <- read.table(paste(full_folder, "/y_", folder, ".txt", sep=""), header=F)
   names(y.data) <- "Act.ID"
-  y.data <- merge(y.data, activ.descs, by="Act.ID", all.x=T, sort=F)
   
   # Process subject data
   subj.data <- read.table(paste(full_folder, "/subject_", folder, ".txt", sep=""), sep=" ", header=F)
   
   # Combine sets
   res <- x.data
-  res$Act.Descr <- y.data$Act.Descr
+  res$Act.ID <- y.data$Act.ID
   res$Subject.ID <- subj.data[, 1]
+  
+  # Merge in Activity Descriptions, but only after lining up data
+  # since merge messes up the order
+  res <- merge(res, activ.descs, by="Act.ID", all.x=T, sort=F)
   
   # Return resulting dataframe
   res
 }
 
 output.clean.data <- function(df, tgt) {
-  print(names(df))
+  # Helpful debugging statements:
+  # print(names(df))
   # print(summary(df))
-  print(dim(df))
+  # print(dim(df))
   write.table(df, tgt, row.names=F)
 }
 
