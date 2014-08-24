@@ -8,12 +8,13 @@ be found below, in the original codebook section. The columns in this summarized
 however, aggregate each subject-activity pair, providing the averages of each of the
 measures for the mean and standard deviation calculations in the original dataset.
 
-Descriptions / Units
+Descriptions and Units
 ----------------------
-Subject.ID is a numeric identifier identifying each subject.
-Activity.Description is a factor describing the activity being performed by the subject.
-The remainder of the columns are dimensionless (i.e. containing no units), since the
-features were all normalized to be between -1 and 1.
+* Subject.ID - numeric identifier identifying each subject.
+* Activity.Description - a factor describing the activity being performed by the subject.
+* The remainder of the columns are averages of the calculations of the corresponding names
+  in the original dataset. They are dimensionless (i.e. contain no units), since the
+  features were all normalized to be between -1 and 1.
 
 Full Column Listing (for Summarized Dataset)
 ----------------------------------------------
